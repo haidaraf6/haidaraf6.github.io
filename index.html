@@ -600,7 +600,35 @@
               </div>
             </form>
           </div><!-- End Contact Form -->
-
+        
+          <script>
+            $(document).ready(function() {
+              $('#contact-form').on('submit', function(e) {
+                e.preventDefault();
+          
+                $.ajax({
+                  url: 'https://formspree.io/f/xqazegjn',
+                  method: 'POST',
+                  data: $(this).serialize(),
+                  dataType: 'json',
+                  beforeSend: function() {
+                    $('.loading').show();
+                    $('.sent-message').hide();
+                    $('.error-message').hide();
+                  },
+                  success: function(data) {
+                    $('.loading').hide();
+                    $('.sent-message').show();
+                    $('#contact-form')[0].reset();
+                  },
+                  error: function(err) {
+                    $('.loading').hide();
+                    $('.error-message').text('There was an error sending your message. Please try again later.').show();
+                  }
+                });
+              });
+            });
+          </script>
         </div>
 
       </div>
